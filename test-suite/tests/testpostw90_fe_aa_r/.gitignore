@@ -1,0 +1,5 @@
+*.wpout
+*.chk
+w90chk2chk.log
+*.mmn
+Fe_aa_r_postw90.dat

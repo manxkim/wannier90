@@ -6,6 +6,7 @@ set(test_names
                 testpostw90_boltzwann
                 testpostw90_example04_dos
                 testpostw90_example04_pdos
+                testpostw90_fe_aa_r
                 testpostw90_fe_ahc
                 testpostw90_fe_ahc_adaptandfermi
                 testpostw90_fe_dos_spin

@@ -41,7 +41,7 @@ module w90_get_oper
   use w90_comms, only: comms_bcast, comms_reduce, comms_array_split, comms_scatterv, &
                        w90_comm_type, mpirank, mpisize
   use w90_constants, only: dp, cmplx_0, cmplx_i, cmplx_1, twopi
-  use w90_io, only: io_stopwatch_start, io_stopwatch_stop
+  use w90_io, only: io_date, io_stopwatch_start, io_stopwatch_stop
   use w90_error, only: w90_error_type, set_error_alloc, set_error_dealloc, set_error_fatal, &
                        set_error_input, set_error_fatal, set_error_file
 
@@ -51,6 +51,7 @@ module w90_get_oper
 
   private :: fourier_q_to_R
   private :: get_win_min
+  private :: write_vector_R
 
   integer :: nno, nn1o, nn2o
 
@@ -784,6 +785,12 @@ contains
     call comms_bcast(AA_R(1, 1, 1, 1), num_wann*num_wann*wigner_seitz%nrpts_pw90*3, error, comm)
     call comms_bcast(wigner_seitz%wannier_centres_from_AA_R(1, 1), num_wann*3, error, comm)
     if (allocated(error)) return
+
+    if (pw90_berry%write_aa_r) then
+      call write_vector_R(AA_R, wigner_seitz%irvec_pw90, wigner_seitz%nrpts_pw90, num_wann, &
+                          trim(seedname)//'_aa_r_postw90.dat', error, comm)
+      if (allocated(error)) return
+    end if
 
     if (print_output%timing_level > 1 .and. print_output%iprint > 0) &
       call io_stopwatch_stop('get_oper: get_AA_R', timer)
@@ -3122,6 +3129,59 @@ contains
     return
 
   end subroutine get_SAA_R
+
+  !================================================!
+  subroutine write_vector_R(op_R, irvec, nrpts, num_wann, filename, error, comm)
+    !================================================!
+    !
+    !! Write a real-space vector operator using the seedname_r.dat layout
+    !
+    !================================================!
+
+    implicit none
+
+    type(w90_error_type), allocatable, intent(out) :: error
+    type(w90_comm_type), intent(in) :: comm
+
+    integer, intent(in) :: irvec(:, :)
+    integer, intent(in) :: nrpts, num_wann
+    complex(kind=dp), intent(in) :: op_R(:, :, :, :)
+    character(len=*), intent(in) :: filename
+
+    integer :: file_unit, ierr, ir, m, n
+    character(len=33) :: header
+    character(len=9) :: cdate, ctime
+    logical :: on_root
+
+    on_root = (mpirank(comm) == 0)
+    ierr = 0
+    if (on_root) then
+      open (newunit=file_unit, file=trim(filename), form='formatted', status='replace', iostat=ierr)
+    end if
+
+    call comms_bcast(ierr, 1, error, comm)
+    if (allocated(error)) return
+    if (ierr /= 0) then
+      call set_error_file(error, 'Error: write_vector_R: problem opening file '//trim(filename), comm)
+      return
+    end if
+    if (.not. on_root) return
+
+    call io_date(cdate, ctime)
+    header = 'written on '//cdate//' at '//ctime
+    write (file_unit, *) header
+    write (file_unit, *) num_wann
+    write (file_unit, *) nrpts
+    do ir = 1, nrpts
+      do m = 1, num_wann
+        do n = 1, num_wann
+          write (file_unit, '(5I5,6F12.6)') irvec(:, ir), n, m, op_R(n, m, ir, :)
+        end do
+      end do
+    end do
+    close (file_unit)
+
+  end subroutine write_vector_R
 
   !================================================!
   !                   PRIVATE PROCEDURES

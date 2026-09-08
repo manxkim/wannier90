@@ -1679,6 +1679,7 @@ contains
     call w90_readwrite_get_keyword(settings, 'uhu_formatted', found, error, comm)
     call w90_readwrite_get_keyword(settings, 'use_degen_pert', found, error, comm)
     call w90_readwrite_get_keyword(settings, 'wanint_kpoint_file', found, error, comm)
+    call w90_readwrite_get_keyword(settings, 'write_aa_r', found, error, comm)
     call w90_readwrite_get_keyword_vector(settings, 'berry_kmesh', found, 0, error, comm)
     call w90_readwrite_get_keyword_vector(settings, 'boltz_kmesh', found, 0, error, comm)
     call w90_readwrite_get_keyword_vector(settings, 'dos_kmesh', found, 0, error, comm)

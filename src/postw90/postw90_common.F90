@@ -439,6 +439,8 @@ contains
     if (allocated(error)) return
     call comms_bcast(pw90_berry%curv_unit, len(pw90_berry%curv_unit), error, comm)
     if (allocated(error)) return
+    call comms_bcast(pw90_berry%write_aa_r, 1, error, comm)
+    if (allocated(error)) return
 
 ! Tsirkin
     call comms_bcast(pw90_calculation%gyrotropic, 1, error, comm)

@@ -289,6 +289,12 @@ program = POSTW90_WPOUT_OK
 inputs_args = ('Fe.win', '')
 output = Fe.wpout
 
+# Test postw90 AA_R output using the seedname_r.dat layout
+[testpostw90_fe_aa_r/]
+program = POSTW90_RMN_OK
+inputs_args = ('Fe.win', '')
+output = Fe_aa_r_postw90.dat
+
 # Test of AHC for bcc iron with adaptive mesh refinement and Fermi scan
 [testpostw90_fe_ahc_adaptandfermi/]
 program = POSTW90_FERMISCAN_OK

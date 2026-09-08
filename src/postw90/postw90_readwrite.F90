@@ -854,6 +854,9 @@ contains
     call w90_readwrite_get_keyword(settings, 'transl_inv_full', found, error, comm, &
                                    l_value=pw90_berry%transl_inv_full)
     if (allocated(error)) return
+    call w90_readwrite_get_keyword(settings, 'write_aa_r', found, error, comm, &
+                                   l_value=pw90_berry%write_aa_r)
+    if (allocated(error)) return
     if (pw90_berry%transl_inv .and. pw90_berry%transl_inv_full) then
       call set_error_input(error, 'Error: If transl_inv_full=T, transl_inv=T is not recommended', comm)
       return
