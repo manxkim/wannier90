@@ -2,6 +2,7 @@ num_wann = 4
 num_iter = 20
 
 write_rmn = .true.
+transl_inv_full = .true.
 iprint = 0
 
 begin projections

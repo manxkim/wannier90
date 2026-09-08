@@ -25,6 +25,7 @@ berry = true
 berry_task = ahc!+morb
 berry_kmesh = 10 10 10
 write_aa_r = true
+transl_inv_full = true
 
 !kpath = true
 !kpath_task = bands+morb
