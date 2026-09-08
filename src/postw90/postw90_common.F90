@@ -441,6 +441,10 @@ contains
     if (allocated(error)) return
     call comms_bcast(pw90_berry%write_aa_r, 1, error, comm)
     if (allocated(error)) return
+    call comms_bcast(pw90_berry%write_bb_r, 1, error, comm)
+    if (allocated(error)) return
+    call comms_bcast(pw90_berry%write_cc_r, 1, error, comm)
+    if (allocated(error)) return
 
 ! Tsirkin
     call comms_bcast(pw90_calculation%gyrotropic, 1, error, comm)

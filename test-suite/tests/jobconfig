@@ -277,6 +277,12 @@ program = POSTW90_GENINTERPDAT_OK
 inputs_args = ('silicon.win', '')
 output = silicon_geninterp.dat
 
+# Test postw90 vector and tensor real-space operator output
+[testpostw90_te_oper_r/]
+program = POSTW90_TENSOR_R_OK
+inputs_args = ('Te.win', '')
+output = Te_cc_r_postw90.dat
+
 # Test of the electrical conductivity in BoltzWann
 [testpostw90_boltzwann/]
 program = POSTW90_BOLTZWANN_ELCOND_OK

@@ -176,6 +176,8 @@ module w90_postw90_types
     logical :: transl_inv_full = .false.
     logical :: guiding_centres = .false.
     logical :: write_aa_r = .false.
+    logical :: write_bb_r = .false.
+    logical :: write_cc_r = .false.
     real(kind=dp) :: kdotp_kpoint(3) = 0.0_dp
     integer, allocatable :: kdotp_bands(:)
     integer :: kubo_nfreq

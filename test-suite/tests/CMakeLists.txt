@@ -41,6 +41,7 @@ set(test_names
                 testpostw90_pt_tetra_shcfreq
                 testpostw90_si_geninterp
                 testpostw90_si_geninterp_wsdistance
+                testpostw90_te_oper_r
                 testpostw90_te_gyrotropic
                 testpostw90_te_gyrotropic_C
                 testpostw90_te_gyrotropic_D0
